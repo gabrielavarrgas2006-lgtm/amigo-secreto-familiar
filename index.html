@@ -1,193 +1,119 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎁 Amigo Secreto Familiar - Lucy, Mami, Chayo y Jerlin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Secreto Familiar con PINs - Lucy, Mami, Chayo, Jerlin</title>
     
-    <!-- Meta tags para compartir por WhatsApp / Redes Sociales -->
-    <meta name="description" content="Aplicación privada de Amigo Secreto Familiar para Lucy, Mami, Chayo y Jerlin con PIN secreto y Modo Detective.">
+    <!-- Meta tags para compartir por WhatsApp -->
+    <meta name="description" content="Amigo Secreto Familiar para Lucy, Mami, Chayo y Jerlin con PIN y Modo Detective.">
     <meta property="og:title" content="🎁 Amigo Secreto Familiar">
-    <meta property="og:description" content="Consulta tu secreto con tu PIN de 4 dígitos o usa el Modo Detective si olvidaste a quién te tocó regalar.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#4f46e5">
-
-    <!-- Favicon de Regalo Navideño en SVG embebido -->
+    <meta property="og:description" content="Guarda tu secreto con PIN o usa el Modo Detective con alertas rojas/verdes y confeti.">
+    
+    <!-- Favicon de Regalo -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome 6 (Iconos) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <!-- Google Fonts: Inter y Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        heading: ['"Outfit"', 'sans-serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bounce-short': 'bounce 1s ease-in-out 2',
-                        'shake': 'shake 0.4s ease-in-out',
-                    },
-                    keyframes: {
-                        shake: {
-                            '0%, 100%': { transform: 'translateX(0)' },
-                            '20%, 60%': { transform: 'translateX(-8px)' },
-                            '40%, 80%': { transform: 'translateX(8px)' },
-                        }
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Fredoka', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-
-    <style>
-        /* Ocultar flechitas en inputs numéricos */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-        .pin-glow:focus {
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
-        }
-    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-indigo-950 to-purple-950 min-h-screen text-slate-100 font-sans flex flex-col justify-between selection:bg-pink-500 selection:text-white antialiased p-3 sm:p-6 md:p-8">
+<body class="bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 min-h-screen text-white font-sans flex flex-col items-center justify-between p-4 md:p-8">
 
-    <!-- Ambient Background Glows -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl"></div>
-        <div class="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
-    </div>
-
-    <!-- ENCABEZADO -->
-    <header class="w-full max-w-xl mx-auto text-center pt-2 pb-5">
-        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500/15 to-purple-500/15 border border-pink-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-pink-300 shadow-sm backdrop-blur-md mb-3">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Edición Familiar &bull; Lucy, Mami, Chayo, Jerlin</span>
+    <!-- Header -->
+    <header class="w-full max-w-2xl text-center mb-6">
+        <div class="inline-block bg-pink-500/20 text-pink-300 px-4 py-1.5 rounded-full text-sm font-medium mb-2 border border-pink-500/30">
+            <i class="fa-solid fa-lock mr-2"></i> Segurito & Privado (Lucy, Mami, Chayo, Jerlin)
         </div>
-        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-200 to-amber-300">
-            Amigo Secreto 🎁
+        <h1 class="font-heading text-3xl md:text-5xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-amber-300">
+            Amigo Secreto Familiar
         </h1>
-        <p class="text-xs sm:text-sm text-purple-200/80 mt-1.5 max-w-md mx-auto">
-            Descubre a quién te tocó con tu PIN secreto o usa el Modo Detective con alertas rojo/verde.
+        <p class="text-purple-200 text-sm md:text-base mt-2">
+            Cada quien guarda su secreto con PIN. Si tu hermana olvidó a quién le tocó, ¡use el Modo Detective!
         </p>
     </header>
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <main class="w-full max-w-xl mx-auto flex-1 flex flex-col justify-center">
+    <!-- Main Container -->
+    <main class="w-full max-w-xl bg-white/10 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border border-white/20 mb-6">
 
-        <!-- ========================================== -->
-        <!-- PANTALLA 1: MENÚ PRINCIPAL -->
-        <!-- ========================================== -->
-        <section id="view-menu" class="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 transition-all">
-            
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center text-sm font-bold">
-                        <i class="fa-solid fa-sparkles"></i>
-                    </div>
-                    <h2 class="font-heading text-lg sm:text-xl font-bold text-white">¿Qué deseas hacer?</h2>
-                </div>
-                <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-200 border border-purple-400/20">
-                    4 Participantes
-                </span>
+        <!-- MENÚ PRINCIPAL -->
+        <section id="step-menu" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <h2 class="font-heading text-xl text-amber-300 flex items-center">
+                    <i class="fa-solid fa-house-chimney mr-2"></i> Menú Principal
+                </h2>
+                <span class="text-xs bg-amber-400/20 text-amber-200 px-2.5 py-1 rounded-full font-medium">Participantes: 4</span>
             </div>
 
-            <!-- Botones Principales -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                
-                <!-- Botón 1: Consultar mi Secreto -->
-                <button type="button" onclick="navigate('consult')" 
-                    class="group relative overflow-hidden bg-gradient-to-br from-indigo-900/50 via-purple-900/40 to-slate-900/60 hover:from-indigo-800/60 hover:to-purple-800/50 border border-indigo-400/30 hover:border-indigo-400/60 rounded-2xl p-4 sm:p-5 text-left transition-all duration-200 shadow-lg hover:shadow-indigo-500/10 active:scale-[0.98]">
-                    <div class="w-11 h-11 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xl mb-3 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-transform">
-                        <i class="fa-solid fa-key"></i>
+            <p class="text-sm text-purple-200">
+                Selecciona una opción. Para registrar tu secreto por primera vez o editarlo con tu PIN, usa la opción 1. Si tu hermana olvidó a quién le regaló, usa el Modo Detective.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Botón 1: Registro Individual con PIN -->
+                <button onclick="openRegisterModal()" class="p-5 bg-gradient-to-br from-indigo-600/40 to-purple-700/40 hover:from-indigo-600/60 hover:to-purple-700/60 border border-indigo-400/30 rounded-2xl text-left transition duration-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/30 flex items-center justify-center text-indigo-300 mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-user-lock text-lg"></i>
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-white">1. Guardar mi Secreto (PIN)</h3>
+                        <p class="text-xs text-indigo-200 mt-1">Pasa la laptop, elige tu nombre, pon a quién te tocó y crea un PIN de 4 dígitos para que nadie más lo vea.</p>
                     </div>
-                    <h3 class="font-heading text-base sm:text-lg font-bold text-white flex items-center gap-1.5">
-                        1. Ver mi Secreto
-                        <i class="fa-solid fa-arrow-right text-xs text-indigo-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
-                    </h3>
-                    <p class="text-xs text-indigo-200/80 mt-1 leading-relaxed">
-                        Ingresa con tu PIN de 4 dígitos para ver a quién te tocó regalar de forma privada.
-                    </p>
+                    <span class="text-xs text-indigo-300 mt-4 font-medium flex items-center"><i class="fa-solid fa-arrow-right mr-1"></i> Entrar</span>
                 </button>
 
                 <!-- Botón 2: Modo Detective -->
-                <button type="button" onclick="navigate('detective')" 
-                    class="group relative overflow-hidden bg-gradient-to-br from-pink-900/50 via-rose-900/40 to-slate-900/60 hover:from-pink-800/60 hover:to-rose-800/50 border border-pink-400/30 hover:border-pink-400/60 rounded-2xl p-4 sm:p-5 text-left transition-all duration-200 shadow-lg hover:shadow-pink-500/10 active:scale-[0.98]">
-                    <div class="w-11 h-11 rounded-xl bg-pink-500/20 text-pink-300 flex items-center justify-center text-xl mb-3 group-hover:scale-110 group-hover:bg-pink-500/30 transition-transform">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                <button onclick="openDetectiveSection()" class="p-5 bg-gradient-to-br from-pink-600/40 to-rose-700/40 hover:from-pink-600/60 hover:to-rose-700/60 border border-pink-400/30 rounded-2xl text-left transition duration-200 group flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-pink-500/10 text-8xl font-bold select-none pointer-events-none">?</div>
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-pink-500/30 flex items-center justify-center text-pink-300 mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-magnifying-glass-chart text-lg"></i>
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-white">2. Modo Detective (Ayuda Memoria)</h3>
+                        <p class="text-xs text-pink-200 mt-1">Si tu hermana olvidó a quién le tocó, prueba nombres: si falla sale ROJO, si acierta sale VERDE con confeti.</p>
                     </div>
-                    <h3 class="font-heading text-base sm:text-lg font-bold text-white flex items-center gap-1.5">
-                        2. Modo Detective
-                        <i class="fa-solid fa-arrow-right text-xs text-pink-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
-                    </h3>
-                    <p class="text-xs text-pink-200/80 mt-1 leading-relaxed">
-                        ¿Tu hermana olvidó a quién le tocó? Prueba nombres: <span class="text-rose-300 font-semibold">ROJO</span> si falla, <span class="text-emerald-300 font-semibold">VERDE</span> con confeti si acierta.
-                    </p>
-                </button>
-
-            </div>
-
-            <!-- Opción secundaria: Configurar / Editar secretos -->
-            <div class="pt-2 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-2">
-                <button type="button" onclick="navigate('register')" class="text-xs text-purple-300/80 hover:text-purple-200 flex items-center gap-1.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
-                    <i class="fa-solid fa-pen-to-square"></i> Guardar o cambiar asignaciones / PINs
-                </button>
-                <button type="button" onclick="openResetModal()" class="text-xs text-slate-400 hover:text-amber-300 flex items-center gap-1 py-1.5 px-2 transition">
-                    <i class="fa-solid fa-circle-info"></i> PINs de prueba
+                    <span class="text-xs text-pink-300 mt-4 font-medium flex items-center"><i class="fa-solid fa-arrow-right mr-1"></i> Ayudar a mi hermana</span>
                 </button>
             </div>
-
         </section>
 
-        <!-- ========================================== -->
-        <!-- PANTALLA 2: CONSULTAR MI SECRETO CON PIN -->
-        <!-- ========================================== -->
-        <section id="view-consult" class="hidden bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 transition-all">
-            
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-sm font-bold">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <h2 class="font-heading text-lg sm:text-xl font-bold text-white">Consulta Privada</h2>
-                </div>
-                <button type="button" onclick="navigate('menu')" class="text-xs bg-white/10 hover:bg-white/20 text-slate-200 px-3 py-1.5 rounded-full transition flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Volver
+        <!-- SECCIÓN 1: REGISTRO / MODIFICACIÓN CON PIN -->
+        <section id="step-register" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <h2 class="font-heading text-xl text-indigo-300 flex items-center">
+                    <i class="fa-solid fa-key mr-2"></i> Guardar mi Secreto con PIN
+                </h2>
+                <button onclick="showSection('menu')" class="text-xs bg-white/10 hover:bg-white/20 text-purple-200 px-3 py-1 rounded-full transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Volver
                 </button>
             </div>
 
-            <p class="text-xs sm:text-sm text-purple-200/80">
-                Selecciona tu nombre y digita tu PIN de 4 números para revelar a tu amigo secreto.
+            <p class="text-sm text-purple-200">
+                Pasa la laptop a la persona interesada. Selecciona tu nombre, indica a quién te tocó regalar y escribe un PIN de 4 dígitos.
             </p>
 
-            <form onsubmit="handleConsultSecret(event)" class="space-y-4">
-                
-                <!-- Quién eres -->
-                <div>
-                    <label for="consult-name" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-1.5">
-                        1. ¿Quién eres?
-                    </label>
-                    <select id="consult-name" class="w-full bg-slate-800/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-medium text-sm sm:text-base focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition">
+            <div class="space-y-4 bg-purple-950/50 p-5 rounded-2xl border border-white/10">
+                <!-- Seleccionar Nombre -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-semibold text-purple-300 uppercase">1. Selecciona tu nombre:</label>
+                    <select id="reg-name" onchange="syncRegisterOptions()" class="w-full bg-purple-900/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-medium focus:outline-none focus:border-indigo-400">
                         <option value="Lucy">Lucy</option>
                         <option value="Mami">Mami</option>
                         <option value="Chayo">Chayo</option>
@@ -195,511 +121,167 @@
                     </select>
                 </div>
 
-                <!-- PIN con opción de ver/ocultar -->
-                <div>
-                    <label for="consult-pin" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-1.5">
-                        2. Tu PIN de 4 números:
-                    </label>
+                <!-- Seleccionar a quién le regala -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-semibold text-purple-300 uppercase">2. ¿A quién te tocó regalar?:</label>
+                    <select id="reg-target" class="w-full bg-purple-900/80 border border-purple-500/30 rounded-xl px-4 py-3 text-amber-300 font-semibold focus:outline-none focus:border-indigo-400">
+                        <option value="Chayo">Chayo</option>
+                        <option value="Mami">Mami</option>
+                        <option value="Jerlin">Jerlin</option>
+                        <option value="Lucy">Lucy</option>
+                    </select>
+                </div>
+
+                <!-- PIN de 4 dígitos -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-semibold text-purple-300 uppercase">3. Crea tu PIN secreto (4 números):</label>
                     <div class="relative">
-                        <input type="password" id="consult-pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="••••" autocomplete="off"
-                            class="pin-glow w-full bg-slate-800/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-mono tracking-widest text-center text-2xl focus:outline-none focus:border-indigo-400 transition placeholder:text-slate-600">
-                        <button type="button" onclick="togglePasswordVisibility('consult-pin', 'toggle-consult-icon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-purple-300/60 hover:text-purple-200 p-1 text-sm">
-                            <i id="toggle-consult-icon" class="fa-solid fa-eye"></i>
+                        <input type="password" id="reg-pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1234" 
+                            class="w-full bg-purple-900/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-mono tracking-widest text-center text-xl focus:outline-none focus:border-indigo-400">
+                        <button type="button" onclick="togglePinVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-purple-300 hover:text-white p-1">
+                            <i id="pin-eye-icon" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
+                    <p class="text-[11px] text-purple-300/70">Este PIN protegerá tu secreto para que ni Lucy (dueña de la laptop) pueda verlo sin tu PIN.</p>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-heading font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200 flex items-center justify-center gap-2 active:scale-[0.98]">
-                    <i class="fa-solid fa-unlock-keyhole"></i> Revelar mi Secreto
+                <button onclick="saveSecretWithPin()" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-heading font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2 mt-2">
+                    <i class="fa-solid fa-shield-halved"></i> Guardar mi Secreto Seguramente
                 </button>
-
-            </form>
-
-            <!-- TARJETA DE REVELACIÓN (OCULTA POR DEFECTO) -->
-            <div id="secret-card" class="hidden bg-gradient-to-br from-amber-500/10 via-purple-600/20 to-pink-500/10 border-2 border-amber-400/40 rounded-2xl p-5 text-center space-y-3 animate-bounce-short">
-                <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-300 bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
-                    🤫 ¡Solo para tus ojos!
-                </span>
-                <p class="text-xs text-purple-200">Te tocó regalarle con mucho amor a:</p>
-                <div class="text-3xl sm:text-4xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-300 to-white" id="revealed-target-name">
-                    ---
-                </div>
-                <div class="pt-2">
-                    <button type="button" onclick="hideSecretCard()" class="text-xs bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white px-4 py-2 rounded-xl transition inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-eye-slash"></i> Ocultar ahora (por seguridad)
-                    </button>
-                </div>
             </div>
-
         </section>
 
-        <!-- ========================================== -->
-        <!-- PANTALLA 3: MODO DETECTIVE (HERMANA) -->
-        <!-- ========================================== -->
-        <section id="view-detective" class="hidden bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 transition-all">
-            
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-300 flex items-center justify-center text-sm font-bold">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <h2 class="font-heading text-lg sm:text-xl font-bold text-white">Modo Detective</h2>
-                </div>
-                <button type="button" onclick="navigate('menu')" class="text-xs bg-white/10 hover:bg-white/20 text-slate-200 px-3 py-1.5 rounded-full transition flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Volver
+        <!-- SECCIÓN 2: MODO DETECTIVE (Adivinar con feedback rojo/verde) -->
+        <section id="step-detective" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <h2 class="font-heading text-xl text-pink-300 flex items-center">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i> Modo Detective (Hermana)
+                </h2>
+                <button onclick="showSection('menu')" class="text-xs bg-white/10 hover:bg-white/20 text-purple-200 px-3 py-1 rounded-full transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Volver
                 </button>
             </div>
 
-            <div class="bg-pink-950/30 border border-pink-500/20 rounded-2xl p-3.5 flex items-start gap-3">
-                <i class="fa-solid fa-lightbulb text-pink-400 mt-0.5 text-base"></i>
-                <p class="text-xs text-pink-200/90 leading-relaxed">
-                    ¿Tu hermana u otra persona no recuerda a quién le regalaba? Selecciona su nombre, prueba una sospecha y el sistema te dirá <strong class="text-rose-300">ROJO</strong> si no es, o <strong class="text-emerald-300">VERDE</strong> con confeti si acertó.
-                </p>
-            </div>
+            <p class="text-sm text-purple-200">
+                Selecciona el nombre de la persona que olvidó (ej. tu hermana Jerlin u otra) y prueba un nombre candidato. 
+            </p>
 
-            <form onsubmit="handleDetectiveTest(event)" class="space-y-4">
-                
-                <!-- Persona que busca recordar -->
-                <div>
-                    <label for="det-giver" class="block text-xs font-semibold uppercase tracking-wider text-pink-300 mb-1.5">
-                        1. ¿Quién está buscando a su amigo secreto?
-                    </label>
-                    <select id="det-giver" onchange="updateDetectiveCandidateOptions()" class="w-full bg-slate-800/80 border border-pink-500/30 rounded-xl px-4 py-3 text-white font-medium text-sm sm:text-base focus:outline-none focus:border-pink-400 transition">
-                        <option value="Jerlin" selected>Jerlin (Hermana)</option>
+            <div class="space-y-4 bg-purple-950/50 p-5 rounded-2xl border border-white/10">
+                <!-- Quién está buscando -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-semibold text-purple-300 uppercase">¿Quién está buscando su recuerdo?</label>
+                    <select id="det-giver" onchange="syncDetectiveOptions()" class="w-full bg-purple-900/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-medium focus:outline-none focus:border-pink-400">
+                        <option value="Jerlin">Jerlin</option>
                         <option value="Lucy">Lucy</option>
                         <option value="Mami">Mami</option>
                         <option value="Chayo">Chayo</option>
                     </select>
                 </div>
 
-                <!-- Sospecha a probar -->
-                <div>
-                    <label for="det-guess" class="block text-xs font-semibold uppercase tracking-wider text-pink-300 mb-1.5">
-                        2. ¿A quién sospecha que le tocó?
-                    </label>
+                <!-- Candidato a probar -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-semibold text-purple-300 uppercase">Prueba un nombre:</label>
                     <div class="flex gap-2">
-                        <select id="det-guess" class="flex-1 bg-slate-800/80 border border-pink-500/30 rounded-xl px-4 py-3 text-amber-300 font-semibold text-sm sm:text-base focus:outline-none focus:border-pink-400 transition">
-                            <!-- Se llena dinámicamente para no incluirse a sí misma -->
+                        <select id="det-guess" class="flex-1 bg-purple-900/80 border border-purple-500/30 rounded-xl px-4 py-3 text-amber-300 font-semibold focus:outline-none focus:border-pink-400">
+                            <!-- Se actualiza con las opciones que no sean la misma persona -->
                         </select>
-                        <button type="submit" class="bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-heading font-bold px-5 py-3 rounded-xl shadow-lg shadow-pink-600/30 transition duration-200 flex items-center gap-2 active:scale-[0.98] whitespace-nowrap">
+                        <button onclick="testDetectiveGuess()" class="bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-heading font-semibold px-5 py-3 rounded-xl shadow transition duration-200 flex items-center gap-2">
                             <i class="fa-solid fa-bolt"></i> Probar
                         </button>
                     </div>
                 </div>
-
-            </form>
-
-            <!-- CAJA DE RESULTADO DETECTIVE (FEEDBACK DINÁMICO) -->
-            <div id="detective-result-box" class="hidden rounded-2xl p-5 text-center space-y-2 border-2 transition-all">
-                <!-- Contenido inyectado por JS -->
             </div>
 
-        </section>
-
-        <!-- ========================================== -->
-        <!-- PANTALLA 4: GUARDAR / EDITAR CON PIN -->
-        <!-- ========================================== -->
-        <section id="view-register" class="hidden bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-5 transition-all">
-            
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm font-bold">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <h2 class="font-heading text-lg sm:text-xl font-bold text-white">Guardar o Editar Secreto</h2>
-                </div>
-                <button type="button" onclick="navigate('menu')" class="text-xs bg-white/10 hover:bg-white/20 text-slate-200 px-3 py-1.5 rounded-full transition flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Volver
-                </button>
+            <!-- CAJA DE RESULTADO (ROJO O VERDE) -->
+            <div id="detective-feedback" class="hidden p-6 rounded-2xl text-center space-y-3 transition-all duration-300 shadow-2xl border">
+                <!-- Se llena por JavaScript -->
             </div>
-
-            <p class="text-xs sm:text-sm text-purple-200/80">
-                Elige tu nombre, a quién regalarás y define tu PIN personal de 4 dígitos.
-            </p>
-
-            <form onsubmit="handleSaveSecret(event)" class="space-y-4">
-                
-                <!-- Tu nombre -->
-                <div>
-                    <label for="reg-name" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-1.5">
-                        1. Tu nombre:
-                    </label>
-                    <select id="reg-name" onchange="updateRegisterTargetOptions()" class="w-full bg-slate-800/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-medium text-sm sm:text-base focus:outline-none focus:border-purple-400 transition">
-                        <option value="Lucy">Lucy</option>
-                        <option value="Mami">Mami</option>
-                        <option value="Chayo">Chayo</option>
-                        <option value="Jerlin">Jerlin</option>
-                    </select>
-                </div>
-
-                <!-- A quién le regalas -->
-                <div>
-                    <label for="reg-target" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-1.5">
-                        2. ¿A quién le vas a regalar?:
-                    </label>
-                    <select id="reg-target" class="w-full bg-slate-800/80 border border-purple-500/30 rounded-xl px-4 py-3 text-amber-300 font-semibold text-sm sm:text-base focus:outline-none focus:border-purple-400 transition">
-                        <!-- Filtrado para que no se regale a sí misma -->
-                    </select>
-                </div>
-
-                <!-- PIN actual (solo si ya existe) -->
-                <div id="reg-old-pin-container" class="hidden">
-                    <label for="reg-old-pin" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1.5 flex items-center justify-between">
-                        <span>PIN actual (para confirmar cambios):</span>
-                        <span class="text-[10px] text-amber-300/80 lowercase font-normal">requerido</span>
-                    </label>
-                    <input type="password" id="reg-old-pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="Ingresa tu PIN actual" autocomplete="off"
-                        class="pin-glow w-full bg-slate-800/80 border border-amber-500/40 rounded-xl px-4 py-2.5 text-white font-mono tracking-widest text-center text-lg focus:outline-none focus:border-amber-400 transition">
-                </div>
-
-                <!-- Nuevo PIN de 4 dígitos -->
-                <div>
-                    <label for="reg-new-pin" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-1.5">
-                        3. Define tu PIN Secreto (4 números):
-                    </label>
-                    <div class="relative">
-                        <input type="password" id="reg-new-pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1234" autocomplete="off"
-                            class="pin-glow w-full bg-slate-800/80 border border-purple-500/30 rounded-xl px-4 py-3 text-white font-mono tracking-widest text-center text-2xl focus:outline-none focus:border-purple-400 transition placeholder:text-slate-600">
-                        <button type="button" onclick="togglePasswordVisibility('reg-new-pin', 'toggle-reg-icon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-purple-300/60 hover:text-purple-200 p-1 text-sm">
-                            <i id="toggle-reg-icon" class="fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                    <p class="text-[11px] text-purple-300/70 mt-1">
-                        Memoriza este PIN o anótalo. Solo con él podrás consultar tu secreto.
-                    </p>
-                </div>
-
-                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-heading font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-purple-600/30 transition duration-200 flex items-center justify-center gap-2 active:scale-[0.98]">
-                    <i class="fa-solid fa-shield-halved"></i> Guardar Secreto de Forma Segura
-                </button>
-
-            </form>
-
         </section>
 
     </main>
 
-    <!-- MODAL INFORMATIVO: PINs DE PRUEBA / RESTABLECER -->
-    <div id="reset-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity">
-        <div class="bg-slate-900 border border-purple-500/30 rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-heading text-lg font-bold text-amber-300 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-question"></i> PINs de Demostración
-                </h3>
-                <button type="button" onclick="closeResetModal()" class="text-slate-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                El sistema incluye valores iniciales para probar al instante:
-            </p>
-            <div class="bg-slate-950/80 border border-white/10 rounded-xl p-3 space-y-1.5 text-xs font-mono">
-                <div class="flex justify-between text-purple-300"><span>Lucy:</span> <span class="text-amber-300 font-bold">1111</span></div>
-                <div class="flex justify-between text-purple-300"><span>Mami:</span> <span class="text-amber-300 font-bold">2222</span></div>
-                <div class="flex justify-between text-purple-300"><span>Chayo:</span> <span class="text-amber-300 font-bold">3333</span></div>
-                <div class="flex justify-between text-purple-300"><span>Jerlin:</span> <span class="text-amber-300 font-bold">4444</span></div>
-            </div>
-            <div class="pt-2 flex flex-col gap-2">
-                <button type="button" onclick="resetToDefaults()" class="w-full bg-rose-600/30 hover:bg-rose-600/50 text-rose-200 border border-rose-500/30 text-xs font-semibold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-rotate-left"></i> Restablecer a valores de fábrica
-                </button>
-                <button type="button" onclick="closeResetModal()" class="w-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold py-2.5 px-4 rounded-xl transition">
-                    Entendido / Cerrar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION FLOTANTE -->
-    <div id="toast" class="fixed bottom-5 inset-x-4 sm:inset-x-auto sm:right-6 max-w-sm mx-auto transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/20 flex items-center gap-3 z-50 pointer-events-none backdrop-blur-md">
-        <div id="toast-icon-wrap" class="w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">
-            <i id="toast-icon" class="fa-solid fa-circle-info"></i>
-        </div>
-        <span id="toast-message" class="text-xs sm:text-sm font-medium leading-tight"></span>
-    </div>
-
-    <!-- PIE DE PÁGINA -->
-    <footer class="w-full max-w-xl mx-auto text-center py-3 text-[11px] text-purple-300/60">
-        🎄 Amigo Secreto Familiar 2024 &bull; Hecho con amor para Lucy, Mami, Chayo y Jerlin
+    <!-- Footer -->
+    <footer class="text-center text-xs text-purple-300/60">
+        Amigo Secreto Familiar &bull; Lucy, Mami, Chayo y Jerlin
     </footer>
 
-    <!-- ========================================== -->
-    <!-- LÓGICA JAVASCRIPT -->
-    <!-- ========================================== -->
-    <script>
-        const PARTICIPANTS = ["Lucy", "Mami", "Chayo", "Jerlin"];
-        const STORAGE_KEY = 'amigo_secreto_familia_pins_v2';
+    <!-- Notificación flotante Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-white/20 flex items-center gap-3 z-50">
+        <i id="toast-icon" class="fa-solid fa-circle-info text-amber-400"></i>
+        <span id="toast-message" class="text-sm font-medium">Mensaje</span>
+    </div>
 
-        // Estructura de secretos en memoria
+    <!-- Script Principal -->
+    <script>
+        const participantsList = ["Lucy", "Mami", "Chayo", "Jerlin"];
+
+        // Estructura guardada en localStorage:
+        // { "Lucy": { target: "Chayo", pin: "1111" }, ... }
         let secretsData = {};
 
-        // Valores por defecto
-        const DEFAULT_SECRETS = {
-            "Lucy": { target: "Chayo", pin: "1111" },
-            "Mami": { target: "Jerlin", pin: "2222" },
-            "Chayo": { target: "Lucy", pin: "3333" },
-            "Jerlin": { target: "Mami", pin: "4444" }
+        window.onload = function() {
+            loadSecrets();
+            syncRegisterOptions();
+            syncDetectiveOptions();
         };
 
-        // Inicialización al cargar la página
-        window.addEventListener('DOMContentLoaded', () => {
-            loadSecrets();
-            updateDetectiveCandidateOptions();
-            updateRegisterTargetOptions();
-            checkExistingSecretForRegister();
-        });
-
-        // Cargar desde LocalStorage
         function loadSecrets() {
-            try {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                if (stored) {
-                    secretsData = JSON.parse(stored);
-                } else {
-                    // Migrar de versión previa o usar defaults
-                    const oldStored = localStorage.getItem('amigo_secreto_familia_pins');
-                    if (oldStored) {
-                        secretsData = JSON.parse(oldStored);
-                    } else {
-                        secretsData = { ...DEFAULT_SECRETS };
-                    }
-                    saveSecrets();
+            const saved = localStorage.getItem('amigo_secreto_familia_pins');
+            if (saved) {
+                try {
+                    secretsData = JSON.parse(saved);
+                } catch(e) {
+                    secretsData = {};
                 }
-            } catch (err) {
-                console.error("Error al cargar localStorage:", err);
-                secretsData = { ...DEFAULT_SECRETS };
-            }
-        }
-
-        function saveSecrets() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(secretsData));
-            } catch (err) {
-                console.error("Error al guardar en localStorage:", err);
-            }
-        }
-
-        // Navegación fluida entre pantallas
-        function navigate(viewName) {
-            const views = ['menu', 'consult', 'detective', 'register'];
-            views.forEach(v => {
-                const el = document.getElementById(`view-${v}`);
-                if (el) el.classList.add('hidden');
-            });
-
-            const target = document.getElementById(`view-${viewName}`);
-            if (target) {
-                target.classList.remove('hidden');
-            }
-
-            // Resets según la vista
-            if (viewName === 'consult') {
-                hideSecretCard();
-                const pinInput = document.getElementById('consult-pin');
-                if (pinInput) {
-                    pinInput.value = '';
-                    setTimeout(() => pinInput.focus(), 150);
-                }
-            }
-
-            if (viewName === 'detective') {
-                const resBox = document.getElementById('detective-result-box');
-                if (resBox) resBox.classList.add('hidden');
-                updateDetectiveCandidateOptions();
-            }
-
-            if (viewName === 'register') {
-                document.getElementById('reg-new-pin').value = '';
-                const oldPin = document.getElementById('reg-old-pin');
-                if (oldPin) oldPin.value = '';
-                updateRegisterTargetOptions();
-                checkExistingSecretForRegister();
-            }
-        }
-
-        // ==========================================
-        // 1. LÓGICA DE CONSULTA CON PIN
-        // ==========================================
-        function handleConsultSecret(event) {
-            event.preventDefault();
-            const name = document.getElementById('consult-name').value;
-            const pinInput = document.getElementById('consult-pin');
-            const pin = pinInput.value.trim();
-
-            if (!/^\d{4}$/.test(pin)) {
-                showToast("Por favor ingresa un PIN numérico de exactamente 4 dígitos.", "error");
-                pinInput.focus();
-                return;
-            }
-
-            const record = secretsData[name];
-
-            if (!record) {
-                showToast(`No se encontró registro para ${name}. Regístralo primero.`, "warning");
-                return;
-            }
-
-            if (record.pin !== pin) {
-                showToast("PIN incorrecto. Verifica el número e intenta de nuevo.", "error");
-                // Animación de shake en el input
-                pinInput.parentElement.classList.add('animate-shake');
-                setTimeout(() => pinInput.parentElement.classList.remove('animate-shake'), 500);
-                return;
-            }
-
-            // PIN Correcto -> Revelar
-            const card = document.getElementById('secret-card');
-            const nameTarget = document.getElementById('revealed-target-name');
-            nameTarget.textContent = record.target;
-            card.classList.remove('hidden');
-
-            showToast(`¡Hola ${name}! Aquí está tu amigo secreto.`, "success");
-
-            // Lanzar pequeñas chispas sutiles
-            confetti({
-                particleCount: 30,
-                spread: 40,
-                origin: { y: 0.7 }
-            });
-        }
-
-        function hideSecretCard() {
-            const card = document.getElementById('secret-card');
-            if (card) card.classList.add('hidden');
-        }
-
-        // ==========================================
-        // 2. LÓGICA DEL MODO DETECTIVE (ROJO / VERDE)
-        // ==========================================
-        function updateDetectiveCandidateOptions() {
-            const giver = document.getElementById('det-giver').value;
-            const guessSelect = document.getElementById('det-guess');
-            const previousVal = guessSelect.value;
-
-            guessSelect.innerHTML = '';
-            PARTICIPANTS.forEach(p => {
-                if (p !== giver) {
-                    const opt = document.createElement('option');
-                    opt.value = p;
-                    opt.textContent = p;
-                    guessSelect.appendChild(opt);
-                }
-            });
-
-            if (previousVal && previousVal !== giver) {
-                guessSelect.value = previousVal;
-            }
-        }
-
-        function handleDetectiveTest(event) {
-            event.preventDefault();
-            const giver = document.getElementById('det-giver').value;
-            const guess = document.getElementById('det-guess').value;
-            const resultBox = document.getElementById('detective-result-box');
-
-            if (!guess) {
-                showToast("Selecciona a quién crees que le tocó.", "warning");
-                return;
-            }
-
-            const record = secretsData[giver];
-
-            resultBox.classList.remove('hidden', 'bg-red-950/90', 'border-red-500', 'bg-emerald-950/90', 'border-emerald-500', 'animate-shake');
-
-            if (!record) {
-                resultBox.className = "rounded-2xl p-5 text-center space-y-2 border-2 bg-amber-950/90 border-amber-500 text-amber-200";
-                resultBox.innerHTML = `
-                    <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </div>
-                    <h3 class="font-heading text-lg font-bold text-amber-300">Sin registro</h3>
-                    <p class="text-xs text-amber-100">
-                        <strong>${giver}</strong> no tiene un secreto guardado todavía.
-                    </p>
-                `;
-                return;
-            }
-
-            if (record.target === guess) {
-                // ==============================
-                // ACIERTO: ¡VERDE + CONFETI!
-                // ==============================
-                resultBox.className = "rounded-2xl p-5 text-center space-y-2 border-2 bg-emerald-950/90 border-emerald-400 shadow-2xl shadow-emerald-500/20";
-                resultBox.innerHTML = `
-                    <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl animate-bounce-short">
-                        <i class="fa-solid fa-check-double"></i>
-                    </div>
-                    <span class="inline-block px-3 py-1 bg-emerald-500/30 text-emerald-300 text-xs font-bold rounded-full uppercase tracking-wider">
-                        ¡CORRECTO! VERDE
-                    </span>
-                    <h3 class="font-heading text-xl sm:text-2xl font-extrabold text-white">
-                        ¡Sí le tocó a <span class="text-amber-300">${guess}</span>!
-                    </h3>
-                    <p class="text-xs sm:text-sm text-emerald-100">
-                        A <strong>${giver}</strong> efectivamente le tocó regalarle a <strong>${guess}</strong>. ¡Misterio resuelto con éxito!
-                    </p>
-                `;
-
-                // Disparo de fuegos artificiales de confeti
-                triggerFireworks();
-
             } else {
-                // ==============================
-                // FALLO: ¡ROJO VIBRANTE!
-                // ==============================
-                resultBox.className = "rounded-2xl p-5 text-center space-y-2 border-2 bg-red-950/90 border-red-500 shadow-2xl shadow-red-500/20 animate-shake";
-                resultBox.innerHTML = `
-                    <div class="w-14 h-14 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto text-2xl">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                    <span class="inline-block px-3 py-1 bg-red-500/30 text-red-300 text-xs font-bold rounded-full uppercase tracking-wider">
-                        ¡INCORRECTO! ROJO
-                    </span>
-                    <h3 class="font-heading text-xl sm:text-2xl font-extrabold text-white">
-                        No le tocó a <span class="text-rose-300">${guess}</span>
-                    </h3>
-                    <p class="text-xs sm:text-sm text-red-100">
-                        A <strong>${giver}</strong> <u>NO</u> le tocó regalarle a <strong>${guess}</strong>. ¡Intenta con otro familiar!
-                    </p>
-                `;
-
-                // Pequeña vibración en dispositivos móviles que lo soporten
-                if (navigator.vibrate) {
-                    navigator.vibrate([100, 50, 100]);
-                }
+                // Datos iniciales de prueba (pueden sobreescribirlos con sus PINs)
+                secretsData = {
+                    "Lucy": { target: "Chayo", pin: "1111" },
+                    "Mami": { target: "Jerlin", pin: "2222" },
+                    "Chayo": { target: "Lucy", pin: "3333" },
+                    "Jerlin": { target: "Mami", pin: "4444" }
+                };
+                saveSecretsToStorage();
             }
         }
 
-        // Efecto festivo de confeti
-        function triggerFireworks() {
-            const count = 200;
-            const defaults = { origin: { y: 0.65 } };
-
-            function fire(particleRatio, opts) {
-                confetti({
-                    ...defaults,
-                    ...opts,
-                    particleCount: Math.floor(count * particleRatio)
-                });
-            }
-
-            fire(0.25, { spread: 26, startVelocity: 55 });
-            fire(0.2, { spread: 60 });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
+        function saveSecretsToStorage() {
+            localStorage.setItem('amigo_secreto_familia_pins', JSON.stringify(secretsData));
         }
 
-        // ==========================================
-        // 3. LÓGICA DE REGISTRO / EDICIÓN CON PIN
-        // ==========================================
-        function updateRegisterTargetOptions() {
+        // Navegación
+        function showSection(sectionId) {
+            document.getElementById('step-menu').classList.add('hidden');
+            document.getElementById('step-register').classList.add('hidden');
+            document.getElementById('step-detective').classList.add('hidden');
+
+            document.getElementById(`step-${sectionId}`).classList.remove('hidden');
+
+            if(sectionId === 'detective') {
+                document.getElementById('detective-feedback').classList.add('hidden');
+                syncDetectiveOptions();
+            } else if (sectionId === 'register') {
+                syncRegisterOptions();
+            }
+        }
+
+        function openRegisterModal() {
+            document.getElementById('reg-pin').value = '';
+            showSection('register');
+        }
+
+        function openDetectiveSection() {
+            showSection('detective');
+        }
+
+        // Excluir automáticamente autoregalo en el select
+        function syncRegisterOptions() {
             const name = document.getElementById('reg-name').value;
             const targetSelect = document.getElementById('reg-target');
-            const previousVal = targetSelect.value;
-
+            const prev = targetSelect.value;
             targetSelect.innerHTML = '';
-            PARTICIPANTS.forEach(p => {
+
+            participantsList.forEach(p => {
                 if (p !== name) {
                     const opt = document.createElement('option');
                     opt.value = p;
@@ -708,130 +290,151 @@
                 }
             });
 
-            if (previousVal && previousVal !== name) {
-                targetSelect.value = previousVal;
+            if (prev && prev !== name) {
+                targetSelect.value = prev;
             }
         }
 
-        function checkExistingSecretForRegister() {
-            const name = document.getElementById('reg-name').value;
-            const oldContainer = document.getElementById('reg-old-pin-container');
-            const record = secretsData[name];
+        function syncDetectiveOptions() {
+            const giver = document.getElementById('det-giver').value;
+            const guessSelect = document.getElementById('det-guess');
+            const prev = guessSelect.value;
+            guessSelect.innerHTML = '';
 
-            if (record && record.pin) {
-                oldContainer.classList.remove('hidden');
+            participantsList.forEach(p => {
+                if (p !== giver) {
+                    const opt = document.createElement('option');
+                    opt.value = p;
+                    opt.textContent = p;
+                    guessSelect.appendChild(opt);
+                }
+            });
+
+            if (prev && prev !== giver) {
+                guessSelect.value = prev;
+            }
+        }
+
+        // Ver / ocultar PIN
+        function togglePinVisibility() {
+            const pinInput = document.getElementById('reg-pin');
+            const eyeIcon = document.getElementById('pin-eye-icon');
+            if (pinInput.type === 'password') {
+                pinInput.type = 'text';
+                eyeIcon.className = 'fa-solid fa-eye-slash';
             } else {
-                oldContainer.classList.add('hidden');
+                pinInput.type = 'password';
+                eyeIcon.className = 'fa-solid fa-eye';
             }
         }
 
-        document.getElementById('reg-name').addEventListener('change', checkExistingSecretForRegister);
-
-        function handleSaveSecret(event) {
-            event.preventDefault();
+        // Guardar Secreto con PIN
+        function saveSecretWithPin() {
             const name = document.getElementById('reg-name').value;
             const target = document.getElementById('reg-target').value;
-            const newPin = document.getElementById('reg-new-pin').value.trim();
-            const oldPinInput = document.getElementById('reg-old-pin');
-            const oldPin = oldPinInput ? oldPinInput.value.trim() : '';
+            const pin = document.getElementById('reg-pin').value.trim();
 
             if (name === target) {
-                showToast("¡No puedes regalarte a ti misma!", "error");
+                showToast("¡No te puedes regalar a ti misma!", "error");
                 return;
             }
 
-            if (!/^\d{4}$/.test(newPin)) {
-                showToast("El nuevo PIN debe tener exactamente 4 números.", "error");
-                document.getElementById('reg-new-pin').focus();
+            if (!pin || pin.length !== 4 || isNaN(pin)) {
+                showToast("Debes ingresar un PIN válido de exactamente 4 números.", "error");
+                document.getElementById('reg-pin').focus();
                 return;
             }
 
-            const existing = secretsData[name];
-
-            // Si ya tiene PIN registrado, pedir que coincida el PIN anterior
-            if (existing && existing.pin) {
-                if (oldPin !== existing.pin) {
-                    showToast("El PIN actual no coincide. No se puede modificar.", "error");
-                    if (oldPinInput) oldPinInput.focus();
-                    return;
-                }
-            }
-
-            // Guardar registro
+            // Guardar en el diccionario seguro
             secretsData[name] = {
                 target: target,
-                pin: newPin
+                pin: pin
             };
 
-            saveSecrets();
-            showToast(`¡Secreto de ${name} guardado con éxito!`, "success");
-            navigate('menu');
+            saveSecretsToStorage();
+            showToast(`¡Secreto de ${name} guardado con PIN correctamente!`, "success");
+            showSection('menu');
         }
 
-        // ==========================================
-        // UTILIDADES: VISIBILIDAD, TOAST, MODAL
-        // ==========================================
-        function togglePasswordVisibility(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-            if (!input || !icon) return;
+        // Lógica del Modo Detective (Rojo si falla, Verde con confeti si acierta)
+        function testDetectiveGuess() {
+            const giver = document.getElementById('det-giver').value;
+            const guess = document.getElementById('det-guess').value;
+            const feedbackBox = document.getElementById('detective-feedback');
 
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = "fa-solid fa-eye-slash";
+            feedbackBox.classList.remove('hidden', 'bg-red-950/90', 'border-red-500', 'bg-emerald-950/90', 'border-emerald-500', 'animate-pulse');
+
+            const record = secretsData[giver];
+
+            if (!record) {
+                feedbackBox.classList.add('bg-red-950/90', 'border-red-500');
+                feedbackBox.innerHTML = `
+                    <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-red-300">Sin registro</h3>
+                    <p class="text-sm text-red-100">
+                        <strong class="text-white">${giver}</strong> aún no ha guardado su secreto en el sistema. ¡Pásale la laptop para que lo guarde primero!
+                    </p>
+                `;
+                return;
+            }
+
+            if (record.target === guess) {
+                // ¡ACIERTO! (VERDE + CONFETI)
+                feedbackBox.classList.add('bg-emerald-950/90', 'border-emerald-500');
+                feedbackBox.innerHTML = `
+                    <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-3xl animate-bounce">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-emerald-300">¡CORRECTO! ¡Es tu Amigo Secreto!</h3>
+                    <p class="text-sm text-emerald-100">
+                        A <strong class="text-white">${giver}</strong> sí le tocó regalarle a <strong class="text-white">${guess}</strong>. ¡Misterio resuelto con éxito!
+                    </p>
+                `;
+
+                // Lanzar confeti festivo
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+
             } else {
-                input.type = 'password';
-                icon.className = "fa-solid fa-eye";
+                // ERROR (ROJO BRILLANTE CON EFECTO)
+                feedbackBox.classList.add('bg-red-950/90', 'border-red-500', 'animate-pulse');
+                feedbackBox.innerHTML = `
+                    <div class="w-14 h-14 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto text-3xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-red-300">¡INCORRECTO! (No es)</h3>
+                    <p class="text-sm text-red-100">
+                        A <strong class="text-white">${giver}</strong> <strong>NO</strong> le tocó regalarle a <strong class="text-white">${guess}</strong>. ¡Prueba con otro nombre!
+                    </p>
+                `;
             }
         }
 
-        let toastTimeout = null;
+        // Sistema de notificaciones Toast
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toast-message');
-            const toastIconWrap = document.getElementById('toast-icon-wrap');
             const toastIcon = document.getElementById('toast-icon');
 
-            if (!toast || !toastMessage) return;
-
-            clearTimeout(toastTimeout);
-
-            toastMessage.textContent = message;
+            toastMessage.innerText = message;
 
             if (type === 'error') {
-                toastIconWrap.className = "w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 bg-rose-500/20 text-rose-400";
-                toastIcon.className = "fa-solid fa-circle-xmark";
+                toastIcon.className = "fa-solid fa-circle-exclamation text-red-400";
             } else if (type === 'success') {
-                toastIconWrap.className = "w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 bg-emerald-500/20 text-emerald-400";
-                toastIcon.className = "fa-solid fa-circle-check";
-            } else if (type === 'warning') {
-                toastIconWrap.className = "w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 bg-amber-500/20 text-amber-400";
-                toastIcon.className = "fa-solid fa-triangle-exclamation";
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400";
             } else {
-                toastIconWrap.className = "w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 bg-indigo-500/20 text-indigo-400";
-                toastIcon.className = "fa-solid fa-circle-info";
+                toastIcon.className = "fa-solid fa-circle-info text-amber-400";
             }
 
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            toastTimeout = setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3800);
-        }
-
-        function openResetModal() {
-            document.getElementById('reset-modal').classList.remove('hidden');
-        }
-
-        function closeResetModal() {
-            document.getElementById('reset-modal').classList.add('hidden');
-        }
-
-        function resetToDefaults() {
-            secretsData = { ...DEFAULT_SECRETS };
-            saveSecrets();
-            closeResetModal();
-            showToast("Datos restablecidos a los valores iniciales.", "info");
-            navigate('menu');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
         }
     </script>
 </body>
